@@ -41,15 +41,17 @@ def transform(sentences):
         last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
         pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
         # either output mean embedding vectors or the pooler output
-        output.append(pooler_output.detach().numpy().tolist())
+        output.append(pooler_output.detach().numpy())
     return output
 
 print("transforming Xpool...")
 Xpool = transform(Xpool)
+#print(Xpool.shape)
 #Xpool = Xpool.detach().numpy()
 print("transforming Xtest...")
 Xtest = transform(Xtest)
 #Xtest = Xtest.detach().numpy()
+print("done with transformation")
 
 rus = RandomUnderSampler(random_state=42)
 Xpool, ypool = rus.fit_sample(Xpool, ypool)

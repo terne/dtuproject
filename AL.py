@@ -82,7 +82,7 @@ ytrain=np.take(ypool,trainset,axis=0)
 poolidx=np.arange(len(Xpool),dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 
-num_iterations=25 # move up to 100
+num_iterations=97 
 model = lin.LogisticRegression(penalty='l2',C=1.)
 
 # Uncertainty sampling following the FMRI exercise notebook
@@ -105,5 +105,6 @@ for i in range(num_iterations):
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
     print('Model: LR, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
 
+print(pred)
 
 # Query by commitee

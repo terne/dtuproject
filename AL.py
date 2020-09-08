@@ -32,27 +32,24 @@ print(Xpool[:10])
 # use pretrained embeddings (transfer learning) – transformer-based (BERT).
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 model = BertModel.from_pretrained('bert-base-uncased')
-def transform(sents):
+def transform(sentences):
     output = []
-    b_index = 0
-    while b_index<len(sents)-5:
-        for sentences in sents[:b_index+5]:
-            inputs = tokenizer(sentences, padding=True, truncation=True, return_tensors="pt")
-            input_ids, token_type_ids, attention_mask = inputs["input_ids"], inputs["token_type_ids"], inputs["attention_mask"]
-            outputs = model(input_ids, attention_mask=attention_mask)
-            last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
-            pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
-            # either output mean embedding vectors or the pooler output
-            output.append(pooler_output)
-            b_index+=5
+    for sent in sentences:
+        inputs = tokenizer(sent, padding=True, truncation=True, return_tensors="pt")
+        input_ids, token_type_ids, attention_mask = inputs["input_ids"], inputs["token_type_ids"], inputs["attention_mask"]
+        outputs = model(input_ids, attention_mask=attention_mask)
+        last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
+        pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
+        # either output mean embedding vectors or the pooler output
+        output.append(pooler_output.detach().numpy().tolist())
     return output
 
 print("transforming Xpool...")
 Xpool = transform(Xpool)
-Xpool = Xpool.detach().numpy()
+#Xpool = Xpool.detach().numpy()
 print("transforming Xtest...")
 Xtest = transform(Xtest)
-Xtest = Xtest.detach().numpy()
+#Xtest = Xtest.detach().numpy()
 
 rus = RandomUnderSampler(random_state=42)
 Xpool, ypool = rus.fit_sample(Xpool, ypool)

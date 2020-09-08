@@ -30,9 +30,9 @@ print(Xpool[:10])
 def transform(sentences):
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     inputs = tokenizer(sentences, padding=True, truncation=True, return_tensors="pt")
-    input_ids, token_type_ids, attention_mask = inputs["input_ids"], inputs["token_type_ids"], inputs["attention_mask"]
+    input_ids, token_type_ids = inputs["input_ids"], inputs["token_type_ids"]
     model = BertModel.from_pretrained('bert-base-uncased')
-    outputs = model(input_ids, attention_mask=attention_mask)
+    outputs = model(input_ids)
     last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
     pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
     # either output mean embedding vectors or the pooler output
@@ -95,3 +95,6 @@ for i in range(num_iterations):
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
     print('Model: LR, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
+
+
+# Query by commitee

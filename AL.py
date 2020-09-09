@@ -60,15 +60,16 @@ rus = RandomUnderSampler(random_state=42)
 Xpool, ypool = rus.fit_sample(Xpool, ypool)
 print('Resampled dataset shape {}'.format(Counter(ypool)))
 Xpool, Xtest = np.array(Xpool), np.array(Xtest)
+print("length of Xpool", len(Xpool))
 
-Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
-Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
+#Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
+#Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
 #print(Xpool_class1idx)
 addn=5 #samples to add each time
 #randomize order of pool to avoid sampling the same subject sequentially
 order=np.random.permutation(range(len(Xpool)))
-order0 = np.random.permutation(Xpool_class0idx)
-order1 = np.random.permutation(Xpool_class1idx)
+#order0 = np.random.permutation(Xpool_class0idx)
+#order1 = np.random.permutation(Xpool_class1idx)
 
 ninit = 5 #initial samples
 #initial training set
@@ -81,6 +82,7 @@ ytrain=np.take(ypool,trainset,axis=0)
 #remove data from pool
 poolidx=np.arange(len(Xpool),dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
+print("length of poolidx", len(poolidx))
 
 num_iterations=95
 #clf = lin.LogisticRegression(penalty='l2',C=1.)

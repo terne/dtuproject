@@ -100,7 +100,7 @@ for i in range(num_iterations):
     Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
-    print('Model: LR, {} random samples, Acc:'.format(len(Xtrain),accuracy))
+    print('Model: Linear SVM, {} random samples, Acc: {}'.format(len(Xtrain),accuracy))
 
 # Uncertainty sampling following the FMRI exercise notebook
 #reset training set and pool but starting with the same 10 samples as before.
@@ -155,7 +155,7 @@ for i in range(num_iterations):
         #fit
         clf.fit(Xtr, ytr)
         #predict
-        ypool_lab.append(model.predict(Xpool[poolidx]))
+        ypool_lab.append(clf.predict(Xpool[poolidx]))
     #get probability of label for each class based on voting in the committee
     ypool_p=(np.mean(np.array(ypool_lab)==0,0),np.mean(np.array(ypool_lab)==1,0))
     ypool_p=np.array(ypool_p).T

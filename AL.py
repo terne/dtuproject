@@ -88,8 +88,8 @@ print("length of poolidx", len(poolidx))
 num_iterations=95
 
 # classification models
-#LR = lin.LogisticRegression(penalty='l2',C=1.)
-clf = SVC(kernel="linear")
+#clf = lin.LogisticRegression(penalty='l2',C=1.)
+clf = LinearSVC()
 
 
 print("Beginning random sampling")
@@ -111,7 +111,7 @@ for i in range(num_iterations):
 # Uncertainty sampling following the FMRI exercise notebook
 #reset training set and pool but starting with the same 10 samples as before.
 clf = None
-clf = SVC(kernel="linear")
+clf = LinearSVC()
 print("initial data point indices:",trainset)
 Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
@@ -124,7 +124,7 @@ for i in range(num_iterations):
     clf.fit(Xtrain,ytrain)
     pred = clf.predict(Xtest)
     accuracy = accuracy_score(ytest,pred)
-    testacc_uncertainty.append(accuracy)
+    testacc_uncertainty.append((len(Xtrain),accuracy))
     #get label probabilities on unlabelled pool, LR:
     #ypool_p = clf.predict_proba(Xpool[poolidx])
     #select least confident max likely label - then sort in negative order - note the minus, LR:
@@ -143,7 +143,7 @@ print(pred)
 
 # Query by commitee
 clf = None
-clf = SVC(kernel="linear")
+clf = LinearSVC()
 testacc_qbc=[]
 ncomm=10
 #reset training set and pool but starting with the same 10 samples as before.
@@ -176,15 +176,15 @@ for i in range(num_iterations):
     Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
-    print(len(ypool_p_sort_idx[-addn:]))
+    #print(len(ypool_p_sort_idx[-addn:]))
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
     print('Model: Linear SVM, {} samples (QBC), Acc: {}, samples left in pool: {}'.format(len(Xtrain), accuracy, len(poolidx)))
 
 #Plot learning curve
-plt.plot(*tuple(np.array(testacc).T))
-plt.plot(*tuple(np.array(testacc_uncertainty).T))
-plt.plot(*tuple(np.array(testacc_qbc).T))
+plt.plot(*tuple(np.array(testacc).T));
+plt.plot(*tuple(np.array(testacc_uncertainty).T));
+plt.plot(*tuple(np.array(testacc_qbc).T));
 #plt.plot(*tuple(np.array(testacc_emc).T));
 #plt.legend(('random sampling','uncertainty sampling','QBC','EMC'));
-plt.legend(('random sampling','uncertainty sampling','QBC'))
+plt.legend(('random sampling','uncertainty sampling','QBC'));
 plt.savefig("learning_curves.png", dpi=100)

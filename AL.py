@@ -31,7 +31,6 @@ ytest = test.label.values
 print(len(ypool), len(ytest))
 print(Xpool[:10])
 
-
 # use pretrained embeddings (transfer learning) – transformer-based (BERT).
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 model = BertModel.from_pretrained('bert-base-uncased')
@@ -67,12 +66,10 @@ Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
 #print(Xpool_class1idx)
 addn=5 #samples to add each time
 #randomize order of pool to avoid sampling the same subject sequentially
-#order=np.random.permutation(range(len(Xpool)))
+order=np.random.permutation(range(len(Xpool)))
 order0 = np.random.permutation(Xpool_class0idx)
 order1 = np.random.permutation(Xpool_class1idx)
 
-#samples in the pool
-poolidx=np.arange(len(Xpool),dtype=np.int)
 ninit = 5 #initial samples
 #initial training set
 #trainset=order[:ninit]
@@ -85,11 +82,34 @@ ytrain=np.take(ypool,trainset,axis=0)
 poolidx=np.arange(len(Xpool),dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 
-num_iterations=80
+num_iterations=95
 #clf = lin.LogisticRegression(penalty='l2',C=1.)
 clf = SVC(kernel="linear")
 
+print("Beginning random sampling")
+testacc=[]
+for i in range(num_iterations):
+    #Fit model
+    clf.fit(Xtrain,ytrain)
+    #predict on test set
+    ye=clf.predict(Xtest)
+    #calculate and accuracy and add to list
+    testacc.append((len(Xtrain),sklearn.metrics.accuracy_score(ytest,ye)))
+    random_indices = np.random.choice(poolidx,addn)
+    Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
+    ytrain = np.concatenate((ytrain,ypool[random_indices]))
+    poolidx=np.setdiff1d(poolidx,random_indices)
+    print('Model: LR, %i random samples'%(len(Xtrain)))
+
 # Uncertainty sampling following the FMRI exercise notebook
+#reset training set and pool but starting with the same 10 samples as before.
+clf = None
+clf = SVC(kernel="linear")
+print("initial data point indices:",trainset)
+Xtrain=np.take(Xpool,trainset,axis=0)
+ytrain=np.take(ypool,trainset,axis=0)
+poolidx=np.arange(len(Xpool),dtype=np.int)
+poolidx=np.setdiff1d(poolidx,trainset)
 testacc_uncertainty = []
 print("Beginning AL iterations")
 for i in range(num_iterations):
@@ -125,8 +145,7 @@ Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
 poolidx=np.arange(len(Xpool),dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
-
-
+print("Beginning QBC")
 for i in range(num_iterations):
     ypool_lab = []
     for j in range(ncomm):
@@ -151,11 +170,13 @@ for i in range(num_iterations):
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (QBC), Acc: {}'.format(ninit+i*addn, accuracy))
+    print('Model: Linear SVM, {} samples (QBC), Acc: {}, samples left in pool: {}'.format(ninit+i*addn, accuracy, len(poolidx)))
 
 #Plot learning curve
-#plt.plot(*tuple(np.array(testacc).T));
-plt.plot(*tuple(np.array(testacc_uncertainty).T));
-plt.plot(*tuple(np.array(testacc_qbc).T));
+plt.plot(*tuple(np.array(testacc).T))
+plt.plot(*tuple(np.array(testacc_uncertainty).T))
+plt.plot(*tuple(np.array(testacc_qbc).T))
 #plt.plot(*tuple(np.array(testacc_emc).T));
 #plt.legend(('random sampling','uncertainty sampling','QBC','EMC'));
+plt.legend(('random sampling','uncertainty sampling','QBC'))
+plt.savefig("learning_curves.png", dpi=100)

@@ -56,25 +56,26 @@ Xtest = transform(Xtest)
 #Xtest = Xtest.detach().numpy()
 print("done with transformation")
 
+print("undersampling now..")
 rus = RandomUnderSampler(random_state=42)
-Xpool, ypool = rus.fit_sample(Xpool, ypool)
+Xpool_res, ypool_res = rus.fit_sample(Xpool, ypool)
 print('Resampled dataset shape {}'.format(Counter(ypool)))
-Xpool, Xtest = np.array(Xpool), np.array(Xtest)
+Xpool, Xtest = np.array(Xpool_res), np.array(Xtest)
 print("length of Xpool", len(Xpool))
 
-#Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
-#Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
+Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
+Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
 #print(Xpool_class1idx)
-addn=5 #samples to add each time
+addn=10 #samples to add each time
 #randomize order of pool to avoid sampling the same subject sequentially
 order=np.random.permutation(range(len(Xpool)))
-#order0 = np.random.permutation(Xpool_class0idx)
-#order1 = np.random.permutation(Xpool_class1idx)
+order0 = np.random.permutation(Xpool_class0idx)
+order1 = np.random.permutation(Xpool_class1idx)
 
-ninit = 5 #initial samples
+ninit = 10 #initial samples
 #initial training set
-trainset=order[:ninit]
-#trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
+#trainset=order[:ninit]
+trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
 print("initial data point indices:",trainset)
 
 Xtrain=np.take(Xpool,trainset,axis=0)

@@ -94,12 +94,13 @@ for i in range(num_iterations):
     #predict on test set
     ye=clf.predict(Xtest)
     #calculate and accuracy and add to list
-    testacc.append((len(Xtrain),sklearn.metrics.accuracy_score(ytest,ye)))
+    accuracy = accuracy_score(ytest,ye)
+    testacc.append((len(Xtrain),accuracy))
     random_indices = np.random.choice(poolidx,addn)
     Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
-    print('Model: LR, %i random samples'%(len(Xtrain)))
+    print('Model: LR, {} random samples, Acc:'.format(len(Xtrain),accuracy))
 
 # Uncertainty sampling following the FMRI exercise notebook
 #reset training set and pool but starting with the same 10 samples as before.

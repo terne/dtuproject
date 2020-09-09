@@ -72,7 +72,7 @@ order=np.random.permutation(range(len(Xpool)))
 order0 = np.random.permutation(Xpool_class0idx)
 order1 = np.random.permutation(Xpool_class1idx)
 
-ninit = 10 #initial samples
+ninit = 5 #initial samples
 #initial training set
 #trainset=order[:ninit]
 trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
@@ -103,7 +103,7 @@ for i in range(num_iterations):
     Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
-    print('Model: Linear SVM, {} random samples, Acc: {}'.format(len(Xtrain),accuracy))
+    print('Model: Linear SVM, {} random samples, Acc: {}, samples left in pool: {}'.format(len(Xtrain),accuracy,len(poolidx)))
 
 # Uncertainty sampling following the FMRI exercise notebook
 #reset training set and pool but starting with the same 10 samples as before.
@@ -135,7 +135,7 @@ for i in range(num_iterations):
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
+    print('Model: Linear SVM, {} samples (uncertainty sampling), Acc: {}, samples left in pool: {}'.format(len(Xtrain), accuracy, len(poolidx)))
 print(pred)
 
 # Query by commitee

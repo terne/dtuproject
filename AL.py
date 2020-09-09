@@ -72,8 +72,8 @@ order1 = np.random.permutation(Xpool_class1idx)
 
 ninit = 5 #initial samples
 #initial training set
-#trainset=order[:ninit]
-trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
+trainset=order[:ninit]
+#trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
 print("initial data point indices:",trainset)
 
 Xtrain=np.take(Xpool,trainset,axis=0)
@@ -170,6 +170,7 @@ for i in range(num_iterations):
     Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
+    print(len(ypool_p_sort_idx[-addn:]))
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
     print('Model: Linear SVM, {} samples (QBC), Acc: {}, samples left in pool: {}'.format(ninit+i*addn, accuracy, len(poolidx)))
 

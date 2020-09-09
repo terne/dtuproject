@@ -4,6 +4,7 @@ import torch
 from transformers import BertTokenizer, BertModel
 import sklearn.linear_model as lin
 from sklearn.metrics import accuracy_score
+from sklearn.svm import LinearSVC, SVC
 from imblearn.under_sampling import RandomUnderSampler
 from collections import Counter
 np.random.seed(42) # random seed to ensure same results but feel free to change
@@ -41,13 +42,13 @@ def transform(sentences):
         last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
         pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
         # either output mean embedding vectors or the pooler output
-        output.append(pooler_output[0].detach().numpy().tolist())
-
+        #output.append(pooler_output[0].detach().numpy().tolist())
+        output.append(torch.mean(last_hidden_state[0],0).detach().numpy().tolist())
     return output
 
 print("transforming Xpool...")
 Xpool = transform(Xpool)
-#print(Xpool.shape)
+print(Xpool[0])
 #Xpool = Xpool.detach().numpy()
 print("transforming Xtest...")
 Xtest = transform(Xtest)
@@ -82,22 +83,27 @@ ytrain=np.take(ypool,trainset,axis=0)
 poolidx=np.arange(len(Xpool),dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 
-num_iterations=97 
-model = lin.LogisticRegression(penalty='l2',C=1.)
+num_iterations=80
+#clf = lin.LogisticRegression(penalty='l2',C=1.)
+clf = SVC(kernel="linear")
 
 # Uncertainty sampling following the FMRI exercise notebook
 acc = []
 print("Beginning AL iterations")
 for i in range(num_iterations):
     # fit model, (want Linear SVM later)
-    model.fit(Xtrain,ytrain)
-    pred = model.predict(Xtest)
+    clf.fit(Xtrain,ytrain)
+    pred = clf.predict(Xtest)
     accuracy = accuracy_score(ytest,pred)
     acc.append(accuracy)
-    #get label probabilities on unlabelled pool
-    ypool_p = model.predict_proba(Xpool[poolidx])
-    #select least confident max likely label - then sort in negative order - note the minus
-    ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
+    #get label probabilities on unlabelled pool, LR:
+    #ypool_p = clf.predict_proba(Xpool[poolidx])
+    #select least confident max likely label - then sort in negative order - note the minus, LR:
+    #ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
+    # get samples closest to the class seperating hyperplane, linear SVM:
+    ypool_p = clf.decision_function(Xpool[poolidx])
+    ypool_p_sort_idx = np.argsort(np.abs(ypool_p))
+
     #add to training set
     Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))

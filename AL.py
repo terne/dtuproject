@@ -5,8 +5,10 @@ from transformers import BertTokenizer, BertModel
 import sklearn.linear_model as lin
 from sklearn.metrics import accuracy_score
 from sklearn.svm import LinearSVC, SVC
+from sklearn.utils import resample
 from imblearn.under_sampling import RandomUnderSampler
 from collections import Counter
+import matplotlib.pyplot as plt
 np.random.seed(42) # random seed to ensure same results but feel free to change
 
 if torch.cuda.is_available():
@@ -48,7 +50,7 @@ def transform(sentences):
 
 print("transforming Xpool...")
 Xpool = transform(Xpool)
-print(Xpool[0])
+print(len(Xpool[0]))
 #Xpool = Xpool.detach().numpy()
 print("transforming Xtest...")
 Xtest = transform(Xtest)
@@ -75,7 +77,7 @@ ninit = 5 #initial samples
 #initial training set
 #trainset=order[:ninit]
 trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
-print(trainset)
+print("initial data point indices:",trainset)
 
 Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
@@ -88,29 +90,72 @@ num_iterations=80
 clf = SVC(kernel="linear")
 
 # Uncertainty sampling following the FMRI exercise notebook
-acc = []
+testacc_uncertainty = []
 print("Beginning AL iterations")
 for i in range(num_iterations):
     # fit model, (want Linear SVM later)
     clf.fit(Xtrain,ytrain)
     pred = clf.predict(Xtest)
     accuracy = accuracy_score(ytest,pred)
-    acc.append(accuracy)
+    testacc_uncertainty.append(accuracy)
     #get label probabilities on unlabelled pool, LR:
     #ypool_p = clf.predict_proba(Xpool[poolidx])
     #select least confident max likely label - then sort in negative order - note the minus, LR:
     #ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
     # get samples closest to the class seperating hyperplane, linear SVM:
     ypool_p = clf.decision_function(Xpool[poolidx])
-    ypool_p_sort_idx = np.argsort(np.abs(ypool_p))
+    ypool_p_sort_idx = np.argsort(-np.abs(np.ravel(ypool_p)))
 
     #add to training set
     Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: LR, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
-
+    print('Model: Linear SVM, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
 print(pred)
 
 # Query by commitee
+clf = None
+clf = SVC(kernel="linear")
+testacc_qbc=[]
+ncomm=10
+#reset training set and pool but starting with the same 10 samples as before.
+print("initial data point indices:",trainset)
+Xtrain=np.take(Xpool,trainset,axis=0)
+ytrain=np.take(ypool,trainset,axis=0)
+poolidx=np.arange(len(Xpool),dtype=np.int)
+poolidx=np.setdiff1d(poolidx,trainset)
+
+
+for i in range(num_iterations):
+    ypool_lab = []
+    for j in range(ncomm):
+        #bootstrapping
+        Xtr,ytr=resample(Xtrain,ytrain,stratify=ytrain)
+        #fit
+        clf.fit(Xtr, ytr)
+        #predict
+        ypool_lab.append(model.predict(Xpool[poolidx]))
+    #get probability of label for each class based on voting in the committee
+    ypool_p=(np.mean(np.array(ypool_lab)==0,0),np.mean(np.array(ypool_lab)==1,0))
+    ypool_p=np.array(ypool_p).T
+    #Refit model in all training data
+    clf.fit(Xtrain,ytrain)
+    ye=clf.predict(Xtest)
+    accuracy = accuracy_score(ytest,ye)
+    testacc_qbc.append((len(Xtrain),accuracy))
+    #select sample with maximum disagreement (least confident)
+    ypool_p_sort_idx = np.argsort(-ypool_p.max(1)) #least confident
+    #add to training set
+    Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    #remove from pool
+    poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
+    print('Model: Linear SVM, {} samples (QBC), Acc: {}'.format(ninit+i*addn, accuracy))
+
+#Plot learning curve
+#plt.plot(*tuple(np.array(testacc).T));
+plt.plot(*tuple(np.array(testacc_uncertainty).T));
+plt.plot(*tuple(np.array(testacc_qbc).T));
+#plt.plot(*tuple(np.array(testacc_emc).T));
+#plt.legend(('random sampling','uncertainty sampling','QBC','EMC'));

@@ -87,10 +87,15 @@ print("length of poolidx", len(poolidx))
 
 num_iterations=95
 
-# classification models
-#clf = lin.LogisticRegression(penalty='l2',C=1.)
-clf = LinearSVC()
+classifier = "svm"
 
+if classifier=="svm":
+    clf = LinearSVC()
+elif classifier=="LR":
+    clf = lin.LogisticRegression(penalty='l2',C=1.)
+else:
+    print("Specify classifier, please.")
+    break
 
 print("Beginning random sampling")
 testacc=[]
@@ -106,12 +111,16 @@ for i in range(num_iterations):
     Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
-    print('Model: Linear SVM, {} random samples, Acc: {}, samples left in pool: {}'.format(len(Xtrain),accuracy,len(poolidx)))
+    print('Model: Linear SVM, {} random samples, Acc: {}'.format(len(Xtrain),accuracy))
 
 # Uncertainty sampling following the FMRI exercise notebook
 #reset training set and pool but starting with the same 10 samples as before.
 clf = None
-clf = LinearSVC()
+if classifier=="svm":
+    clf = LinearSVC()
+else:
+    clf = lin.LogisticRegression(penalty='l2',C=1.)
+
 print("initial data point indices:",trainset)
 Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
@@ -125,25 +134,30 @@ for i in range(num_iterations):
     pred = clf.predict(Xtest)
     accuracy = accuracy_score(ytest,pred)
     testacc_uncertainty.append((len(Xtrain),accuracy))
-    #get label probabilities on unlabelled pool, LR:
-    #ypool_p = clf.predict_proba(Xpool[poolidx])
-    #select least confident max likely label - then sort in negative order - note the minus, LR:
-    #ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
-    # get samples closest to the class seperating hyperplane, linear SVM:
-    ypool_p = clf.decision_function(Xpool[poolidx])
-    ypool_p_sort_idx = np.argsort(-np.abs(np.ravel(ypool_p)))
-
+    if classifier=="svm":
+        # get samples closest to the class seperating hyperplane, linear SVM:
+        ypool_p = clf.decision_function(Xpool[poolidx])
+        ypool_p_sort_idx = np.argsort(-np.abs(np.ravel(ypool_p)))
+    else:
+        #get label probabilities on unlabelled pool, LR:
+        ypool_p = clf.predict_proba(Xpool[poolidx])
+        #select least confident max likely label - then sort in negative order - note the minus, LR:
+        ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
     #add to training set
     Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (uncertainty sampling), Acc: {}, samples left in pool: {}'.format(len(Xtrain), accuracy, len(poolidx)))
+    print('Model: Linear SVM, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
 print(pred)
 
 # Query by commitee
-clf = None
-clf = LinearSVC()
+clf=None
+if classifier=="svm":
+    clf = LinearSVC()
+else:
+    clf = lin.LogisticRegression(penalty='l2',C=1.)
+
 testacc_qbc=[]
 ncomm=10
 #reset training set and pool but starting with the same 10 samples as before.
@@ -178,7 +192,7 @@ for i in range(num_iterations):
     #remove from pool
     #print(len(ypool_p_sort_idx[-addn:]))
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (QBC), Acc: {}, samples left in pool: {}'.format(len(Xtrain), accuracy, len(poolidx)))
+    print('Model: Linear SVM, {} samples (QBC), Acc: {}'.format(len(Xtrain), accuracy))
 
 #Plot learning curve
 plt.plot(*tuple(np.array(testacc).T));
@@ -187,4 +201,6 @@ plt.plot(*tuple(np.array(testacc_qbc).T));
 #plt.plot(*tuple(np.array(testacc_emc).T));
 #plt.legend(('random sampling','uncertainty sampling','QBC','EMC'));
 plt.legend(('random sampling','uncertainty sampling','QBC'));
-plt.savefig("learning_curves.png", dpi=100)
+plt.xlabel("Number of training samples")
+plt.ylabel("Test accuracy")
+plt.savefig(classifier+"_learning_curves.png", dpi=100)

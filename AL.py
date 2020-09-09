@@ -58,9 +58,9 @@ print("done with transformation")
 
 print("undersampling now..")
 rus = RandomUnderSampler(random_state=42)
-Xpool_res, ypool_res = rus.fit_sample(Xpool, ypool)
+Xpool, ypool = rus.fit_sample(Xpool, ypool)
 print('Resampled dataset shape {}'.format(Counter(ypool)))
-Xpool, Xtest = np.array(Xpool_res), np.array(Xtest)
+Xpool, Xtest = np.array(Xpool), np.array(Xtest)
 print("length of Xpool", len(Xpool))
 
 Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]

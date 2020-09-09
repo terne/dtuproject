@@ -86,8 +86,11 @@ poolidx=np.setdiff1d(poolidx,trainset)
 print("length of poolidx", len(poolidx))
 
 num_iterations=95
-#clf = lin.LogisticRegression(penalty='l2',C=1.)
+
+# classification models
+#LR = lin.LogisticRegression(penalty='l2',C=1.)
 clf = SVC(kernel="linear")
+
 
 print("Beginning random sampling")
 testacc=[]
@@ -175,7 +178,7 @@ for i in range(num_iterations):
     #remove from pool
     print(len(ypool_p_sort_idx[-addn:]))
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (QBC), Acc: {}, samples left in pool: {}'.format(ninit+i*addn, accuracy, len(poolidx)))
+    print('Model: Linear SVM, {} samples (QBC), Acc: {}, samples left in pool: {}'.format(len(Xtrain), accuracy, len(poolidx)))
 
 #Plot learning curve
 plt.plot(*tuple(np.array(testacc).T))

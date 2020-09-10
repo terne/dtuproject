@@ -6,9 +6,11 @@ import sklearn.linear_model as lin
 from sklearn.metrics import accuracy_score
 from sklearn.svm import LinearSVC, SVC
 from sklearn.utils import resample
+from sklearn.feature_extraction.text import CountVectorizer
 from imblearn.under_sampling import RandomUnderSampler
 from collections import Counter
 import matplotlib.pyplot as plt
+from scipy.sparse import vstack
 np.random.seed(42) # random seed to ensure same results but feel free to change
 
 if torch.cuda.is_available():
@@ -31,9 +33,13 @@ ytest = test.label.values
 print(len(ypool), len(ytest))
 print(Xpool[:10])
 
-# use pretrained embeddings (transfer learning) – transformer-based (BERT).
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-model = BertModel.from_pretrained('bert-base-uncased')
+representation = "BoW" # "BERT" or "BoW"
+
+if representation = "BERT":
+    # use pretrained embeddings (transfer learning) – transformer-based (BERT).
+    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    model = BertModel.from_pretrained('bert-base-uncased')
+
 def transform(sentences):
     output = []
     for sent in sentences:
@@ -43,24 +49,31 @@ def transform(sentences):
         last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
         pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
         # either output mean embedding vectors or the pooler output
-        output.append(pooler_output[0].detach().numpy().tolist())
-        #output.append(torch.mean(last_hidden_state[0],0).detach().numpy().tolist())
+        #output.append(pooler_output[0].detach().numpy().tolist())
+        output.append(torch.mean(last_hidden_state[0],0).detach().numpy().tolist())
     return output
 
-print("transforming Xpool...")
-Xpool = transform(Xpool)
-print(len(Xpool[0]))
-#Xpool = Xpool.detach().numpy()
-print("transforming Xtest...")
-Xtest = transform(Xtest)
-#Xtest = Xtest.detach().numpy()
-print("done with transformation")
+if representation == "BERT":
+    print("transforming Xpool...")
+    Xpool = transform(Xpool)
+    print(len(Xpool[0]))
+    #Xpool = Xpool.detach().numpy()
+    print("transforming Xtest...")
+    Xtest = transform(Xtest)
+    #Xtest = Xtest.detach().numpy()
+    print("done with transformation")
+elif representation == "BoW":
+    vectorizer = CountVectorizer()
+    Xpool = vectorizer.fit_transform(Xpool)
+    Xtest = vectorizer.tranform(X_test)
+
 
 print("undersampling now..")
 rus = RandomUnderSampler(random_state=42)
 Xpool, ypool = rus.fit_sample(Xpool, ypool)
 print('Resampled dataset shape {}'.format(Counter(ypool)))
-Xpool, Xtest = np.array(Xpool), np.array(Xtest)
+if representation=="BERT":
+    Xpool, Xtest = np.array(Xpool), np.array(Xtest)
 print("length of Xpool", len(Xpool))
 
 Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
@@ -107,7 +120,10 @@ for i in range(num_iterations):
     accuracy = accuracy_score(ytest,ye)
     testacc.append((len(Xtrain),accuracy))
     random_indices = np.random.choice(poolidx,addn)
-    Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
+    if representation=="BERT":
+        Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
+    else:
+        Xtrain = vstack((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
     print('Model: {}, {} random samples, Acc: {}'.format(classifier,len(Xtrain),accuracy))
@@ -143,7 +159,10 @@ for i in range(num_iterations):
         #select least confident max likely label - then sort in negative order - note the minus, LR:
         ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
     #add to training set
-    Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    if representation=="BERT":
+        Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    else:
+        Xtrain = vstack((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
@@ -186,7 +205,10 @@ for i in range(num_iterations):
     #select sample with maximum disagreement (least confident)
     ypool_p_sort_idx = np.argsort(-ypool_p.max(1)) #least confident
     #add to training set
-    Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    if representation=="BERT":
+        Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    else:
+        Xtrain = vstack((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     #print(len(ypool_p_sort_idx[-addn:]))
@@ -202,4 +224,4 @@ plt.plot(*tuple(np.array(testacc_qbc).T));
 plt.legend(('random sampling','uncertainty sampling','QBC'));
 plt.xlabel("Number of training samples")
 plt.ylabel("Test accuracy")
-plt.savefig("pooler_out_"+classifier+"_learning_curves.png", dpi=100)
+plt.savefig("BoW_"+classifier+"_learning_curves.png", dpi=100)

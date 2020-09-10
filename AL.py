@@ -74,6 +74,8 @@ Xpool, ypool = rus.fit_sample(Xpool, ypool)
 print('Resampled dataset shape {}'.format(Counter(ypool)))
 if representation=="BERT":
     Xpool, Xtest = np.array(Xpool), np.array(Xtest)
+elif representation=="BoW":
+    Xpool, Xtest = Xpool.toarray(), Xtest.toarray()
 print("length of Xpool", Xpool.shape[0])
 
 Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
@@ -120,10 +122,10 @@ for i in range(num_iterations):
     accuracy = accuracy_score(ytest,ye)
     testacc.append((len(Xtrain),accuracy))
     random_indices = np.random.choice(poolidx,addn)
-    if representation=="BERT":
-        Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
-    else:
-        Xtrain = vstack((Xtrain,Xpool[random_indices]))
+    #if representation=="BERT":
+    Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
+    #else:
+    #    Xtrain = vstack((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
     print('Model: {}, {} random samples, Acc: {}'.format(classifier,len(Xtrain),accuracy))
@@ -159,10 +161,10 @@ for i in range(num_iterations):
         #select least confident max likely label - then sort in negative order - note the minus, LR:
         ypool_p_sort_idx = np.argsort(-ypool_p.max(1))
     #add to training set
-    if representation=="BERT":
-        Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
-    else:
-        Xtrain = vstack((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    #if representation=="BERT":
+    Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    #else:
+    #    Xtrain = vstack((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
@@ -205,10 +207,10 @@ for i in range(num_iterations):
     #select sample with maximum disagreement (least confident)
     ypool_p_sort_idx = np.argsort(-ypool_p.max(1)) #least confident
     #add to training set
-    if representation=="BERT":
-        Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
-    else:
-        Xtrain = vstack((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    #if representation=="BERT":
+    Xtrain=np.concatenate((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
+    #else:
+    #    Xtrain = vstack((Xtrain,Xpool[poolidx[ypool_p_sort_idx[-addn:]]]))
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     #print(len(ypool_p_sort_idx[-addn:]))

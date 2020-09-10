@@ -35,7 +35,7 @@ print(Xpool[:10])
 
 representation = "BoW" # "BERT" or "BoW"
 
-if representation = "BERT":
+if representation == "BERT":
     # use pretrained embeddings (transfer learning) – transformer-based (BERT).
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     model = BertModel.from_pretrained('bert-base-uncased')
@@ -65,7 +65,7 @@ if representation == "BERT":
 elif representation == "BoW":
     vectorizer = CountVectorizer()
     Xpool = vectorizer.fit_transform(Xpool)
-    Xtest = vectorizer.tranform(X_test)
+    Xtest = vectorizer.transform(Xtest)
 
 
 print("undersampling now..")
@@ -74,14 +74,14 @@ Xpool, ypool = rus.fit_sample(Xpool, ypool)
 print('Resampled dataset shape {}'.format(Counter(ypool)))
 if representation=="BERT":
     Xpool, Xtest = np.array(Xpool), np.array(Xtest)
-print("length of Xpool", len(Xpool))
+print("length of Xpool", Xpool.shape[0])
 
 Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
 Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
 #print(Xpool_class1idx)
 addn=10 #samples to add each time
 #randomize order of pool to avoid sampling the same subject sequentially
-order=np.random.permutation(range(len(Xpool)))
+order=np.random.permutation(range(Xpool.shape[0]))
 order0 = np.random.permutation(Xpool_class0idx)
 order1 = np.random.permutation(Xpool_class1idx)
 
@@ -94,7 +94,7 @@ print("initial data point indices:",trainset)
 Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
 #remove data from pool
-poolidx=np.arange(len(Xpool),dtype=np.int)
+poolidx=np.arange(Xpool.shape[0],dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 print("length of poolidx", len(poolidx))
 
@@ -139,7 +139,7 @@ else:
 print("initial data point indices:",trainset)
 Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
-poolidx=np.arange(len(Xpool),dtype=np.int)
+poolidx=np.arange(Xpool.shape[0],dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 testacc_uncertainty = []
 print("Beginning AL iterations")
@@ -182,7 +182,7 @@ ncomm=10
 print("initial data point indices:",trainset)
 Xtrain=np.take(Xpool,trainset,axis=0)
 ytrain=np.take(ypool,trainset,axis=0)
-poolidx=np.arange(len(Xpool),dtype=np.int)
+poolidx=np.arange(Xpool.shape[0],dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 print("Beginning QBC")
 for i in range(num_iterations):

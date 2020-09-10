@@ -1,0 +1,322 @@
+0.7193995381062356
+0.2806004618937644
+0.6874074074074074
+0.3125925925925926
+1732 675
+['the ngo international rivers reports that "conversations with civil society groups in ethiopia indicate that questioning the government\'s energy sector plans is highly risky, and there are legitimate concerns of government persecution.', 'a passage locke later added to the essay concerning human understanding, questioned whether atheism was necessarily inimical to political obedience.', 'research at hmo shows that transplantation of human embryonic stem cells into the brains of mice with multiple sclerosis (ms) significantly slows the clinical symptoms and pathological manifestations of the disease.', 'baptism of infants is done by triple immersion of the head.', 'population regulation is a density-dependent process, meaning that population growth rates are regulated by the density of a population.', 'when concluded the iso standard will have the number iso/np 14034 [ref].', 'neither finnish construction nor energy companies have at least until end 2010 actively promoted higher energy efficiency standards and alternative energy source obligations.', 'wildlife management in the airport environment can be grouped into two broad categories: non-lethal and lethal.', 'temporary workers must be treated like permanent employees.', 'as previously stated, according to iso standards calibration should happen every 5000 operations or every year, whichever comes first [ref].']
+transforming Xpool...
+768
+transforming Xtest...
+done with transformation
+length of Xpool 1732
+initial data point indices: [ 288  836  260  708   45 1210  918  849 1307 1578]
+length of poolidx 1722
+Beginning random sampling
+Model: svm, 20 random samples, Acc: 0.5451851851851852
+Model: svm, 30 random samples, Acc: 0.5333333333333333
+Model: svm, 40 random samples, Acc: 0.6488888888888888
+Model: svm, 50 random samples, Acc: 0.6533333333333333
+Model: svm, 60 random samples, Acc: 0.6785185185185185
+Model: svm, 70 random samples, Acc: 0.7007407407407408
+Model: svm, 80 random samples, Acc: 0.72
+Model: svm, 90 random samples, Acc: 0.7392592592592593
+Model: svm, 100 random samples, Acc: 0.7318518518518519
+Model: svm, 110 random samples, Acc: 0.7451851851851852
+Model: svm, 120 random samples, Acc: 0.7570370370370371
+Model: svm, 130 random samples, Acc: 0.7614814814814815
+Model: svm, 140 random samples, Acc: 0.7777777777777778
+Model: svm, 150 random samples, Acc: 0.7451851851851852
+Model: svm, 160 random samples, Acc: 0.7540740740740741
+Model: svm, 170 random samples, Acc: 0.7466666666666667
+Model: svm, 180 random samples, Acc: 0.7525925925925926
+Model: svm, 190 random samples, Acc: 0.7511111111111111
+Model: svm, 200 random samples, Acc: 0.7362962962962963
+Model: svm, 210 random samples, Acc: 0.7407407407407407
+Model: svm, 220 random samples, Acc: 0.7496296296296296
+Model: svm, 230 random samples, Acc: 0.7362962962962963
+Model: svm, 240 random samples, Acc: 0.7422222222222222
+Model: svm, 250 random samples, Acc: 0.7362962962962963
+Model: svm, 260 random samples, Acc: 0.7511111111111111
+Model: svm, 270 random samples, Acc: 0.7540740740740741
+Model: svm, 280 random samples, Acc: 0.7585185185185185
+Model: svm, 290 random samples, Acc: 0.7555555555555555
+Model: svm, 300 random samples, Acc: 0.76
+Model: svm, 310 random samples, Acc: 0.76
+Model: svm, 320 random samples, Acc: 0.7644444444444445
+Model: svm, 330 random samples, Acc: 0.7748148148148148
+Model: svm, 340 random samples, Acc: 0.7659259259259259
+Model: svm, 350 random samples, Acc: 0.7762962962962963
+Model: svm, 360 random samples, Acc: 0.7674074074074074
+Model: svm, 370 random samples, Acc: 0.7659259259259259
+Model: svm, 380 random samples, Acc: 0.7718518518518519
+Model: svm, 390 random samples, Acc: 0.76
+Model: svm, 400 random samples, Acc: 0.7644444444444445
+Model: svm, 410 random samples, Acc: 0.7644444444444445
+Model: svm, 420 random samples, Acc: 0.7659259259259259
+Model: svm, 430 random samples, Acc: 0.7674074074074074
+Model: svm, 440 random samples, Acc: 0.7496296296296296
+Model: svm, 450 random samples, Acc: 0.7481481481481481
+Model: svm, 460 random samples, Acc: 0.7525925925925926
+Model: svm, 470 random samples, Acc: 0.7511111111111111
+Model: svm, 480 random samples, Acc: 0.7659259259259259
+Model: svm, 490 random samples, Acc: 0.7570370370370371
+Model: svm, 500 random samples, Acc: 0.7644444444444445
+Model: svm, 510 random samples, Acc: 0.7688888888888888
+Model: svm, 520 random samples, Acc: 0.7748148148148148
+Model: svm, 530 random samples, Acc: 0.7674074074074074
+Model: svm, 540 random samples, Acc: 0.7688888888888888
+Model: svm, 550 random samples, Acc: 0.7703703703703704
+Model: svm, 560 random samples, Acc: 0.7659259259259259
+Model: svm, 570 random samples, Acc: 0.76
+Model: svm, 580 random samples, Acc: 0.7688888888888888
+Model: svm, 590 random samples, Acc: 0.7659259259259259
+Model: svm, 600 random samples, Acc: 0.7644444444444445
+Model: svm, 610 random samples, Acc: 0.762962962962963
+Model: svm, 620 random samples, Acc: 0.7733333333333333
+Model: svm, 630 random samples, Acc: 0.7792592592592592
+Model: svm, 640 random samples, Acc: 0.7822222222222223
+Model: svm, 650 random samples, Acc: 0.7822222222222223
+Model: svm, 660 random samples, Acc: 0.7659259259259259
+Model: svm, 670 random samples, Acc: 0.7733333333333333
+Model: svm, 680 random samples, Acc: 0.7748148148148148
+Model: svm, 690 random samples, Acc: 0.7614814814814815
+Model: svm, 700 random samples, Acc: 0.7777777777777778
+Model: svm, 710 random samples, Acc: 0.7674074074074074
+Model: svm, 720 random samples, Acc: 0.7688888888888888
+Model: svm, 730 random samples, Acc: 0.7659259259259259
+Model: svm, 740 random samples, Acc: 0.7659259259259259
+Model: svm, 750 random samples, Acc: 0.7644444444444445
+Model: svm, 760 random samples, Acc: 0.7674074074074074
+Model: svm, 770 random samples, Acc: 0.7718518518518519
+Model: svm, 780 random samples, Acc: 0.7674074074074074
+Model: svm, 790 random samples, Acc: 0.7748148148148148
+Model: svm, 800 random samples, Acc: 0.7688888888888888
+Model: svm, 810 random samples, Acc: 0.7659259259259259
+Model: svm, 820 random samples, Acc: 0.7718518518518519
+Model: svm, 830 random samples, Acc: 0.7688888888888888
+Model: svm, 840 random samples, Acc: 0.7688888888888888
+Model: svm, 850 random samples, Acc: 0.7703703703703704
+Model: svm, 860 random samples, Acc: 0.7733333333333333
+Model: svm, 870 random samples, Acc: 0.7688888888888888
+Model: svm, 880 random samples, Acc: 0.7659259259259259
+Model: svm, 890 random samples, Acc: 0.7644444444444445
+Model: svm, 900 random samples, Acc: 0.7555555555555555
+Model: svm, 910 random samples, Acc: 0.7525925925925926
+Model: svm, 920 random samples, Acc: 0.7540740740740741
+Model: svm, 930 random samples, Acc: 0.7451851851851852
+Model: svm, 940 random samples, Acc: 0.7525925925925926
+Model: svm, 950 random samples, Acc: 0.7540740740740741
+Model: svm, 960 random samples, Acc: 0.7540740740740741
+initial data point indices: [ 288  836  260  708   45 1210  918  849 1307 1578]
+Beginning AL iterations
+Model: svm, 20 samples (uncertainty sampling), Acc: 0.5451851851851852
+Model: svm, 30 samples (uncertainty sampling), Acc: 0.6681481481481482
+Model: svm, 40 samples (uncertainty sampling), Acc: 0.7318518518518519
+Model: svm, 50 samples (uncertainty sampling), Acc: 0.7274074074074074
+Model: svm, 60 samples (uncertainty sampling), Acc: 0.762962962962963
+Model: svm, 70 samples (uncertainty sampling), Acc: 0.7555555555555555
+Model: svm, 80 samples (uncertainty sampling), Acc: 0.762962962962963
+Model: svm, 90 samples (uncertainty sampling), Acc: 0.762962962962963
+Model: svm, 100 samples (uncertainty sampling), Acc: 0.76
+Model: svm, 110 samples (uncertainty sampling), Acc: 0.7718518518518519
+Model: svm, 120 samples (uncertainty sampling), Acc: 0.7688888888888888
+Model: svm, 130 samples (uncertainty sampling), Acc: 0.762962962962963
+Model: svm, 140 samples (uncertainty sampling), Acc: 0.76
+Model: svm, 150 samples (uncertainty sampling), Acc: 0.76
+Model: svm, 160 samples (uncertainty sampling), Acc: 0.762962962962963
+Model: svm, 170 samples (uncertainty sampling), Acc: 0.7674074074074074
+Model: svm, 180 samples (uncertainty sampling), Acc: 0.7674074074074074
+Model: svm, 190 samples (uncertainty sampling), Acc: 0.7822222222222223
+Model: svm, 200 samples (uncertainty sampling), Acc: 0.7792592592592592
+Model: svm, 210 samples (uncertainty sampling), Acc: 0.7674074074074074
+Model: svm, 220 samples (uncertainty sampling), Acc: 0.7733333333333333
+Model: svm, 230 samples (uncertainty sampling), Acc: 0.762962962962963
+Model: svm, 240 samples (uncertainty sampling), Acc: 0.7703703703703704
+Model: svm, 250 samples (uncertainty sampling), Acc: 0.7718518518518519
+Model: svm, 260 samples (uncertainty sampling), Acc: 0.7762962962962963
+Model: svm, 270 samples (uncertainty sampling), Acc: 0.7851851851851852
+Model: svm, 280 samples (uncertainty sampling), Acc: 0.7792592592592592
+Model: svm, 290 samples (uncertainty sampling), Acc: 0.7837037037037037
+Model: svm, 300 samples (uncertainty sampling), Acc: 0.7851851851851852
+Model: svm, 310 samples (uncertainty sampling), Acc: 0.7881481481481482
+Model: svm, 320 samples (uncertainty sampling), Acc: 0.7851851851851852
+Model: svm, 330 samples (uncertainty sampling), Acc: 0.7896296296296297
+Model: svm, 340 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 350 samples (uncertainty sampling), Acc: 0.7925925925925926
+Model: svm, 360 samples (uncertainty sampling), Acc: 0.7881481481481482
+Model: svm, 370 samples (uncertainty sampling), Acc: 0.7881481481481482
+Model: svm, 380 samples (uncertainty sampling), Acc: 0.7896296296296297
+Model: svm, 390 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 400 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 410 samples (uncertainty sampling), Acc: 0.7925925925925926
+Model: svm, 420 samples (uncertainty sampling), Acc: 0.797037037037037
+Model: svm, 430 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 440 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 450 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 460 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 470 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 480 samples (uncertainty sampling), Acc: 0.797037037037037
+Model: svm, 490 samples (uncertainty sampling), Acc: 0.8014814814814815
+Model: svm, 500 samples (uncertainty sampling), Acc: 0.8059259259259259
+Model: svm, 510 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 520 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 530 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 540 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 550 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 560 samples (uncertainty sampling), Acc: 0.794074074074074
+Model: svm, 570 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 580 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 590 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 600 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 610 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 620 samples (uncertainty sampling), Acc: 0.797037037037037
+Model: svm, 630 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 640 samples (uncertainty sampling), Acc: 0.8014814814814815
+Model: svm, 650 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 660 samples (uncertainty sampling), Acc: 0.797037037037037
+Model: svm, 670 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 680 samples (uncertainty sampling), Acc: 0.7955555555555556
+Model: svm, 690 samples (uncertainty sampling), Acc: 0.797037037037037
+Model: svm, 700 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 710 samples (uncertainty sampling), Acc: 0.8014814814814815
+Model: svm, 720 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 730 samples (uncertainty sampling), Acc: 0.8014814814814815
+Model: svm, 740 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 750 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 760 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 770 samples (uncertainty sampling), Acc: 0.8014814814814815
+Model: svm, 780 samples (uncertainty sampling), Acc: 0.8014814814814815
+Model: svm, 790 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 800 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 810 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 820 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 830 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 840 samples (uncertainty sampling), Acc: 0.7985185185185185
+Model: svm, 850 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 860 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 870 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 880 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 890 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 900 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 910 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 920 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 930 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 940 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 950 samples (uncertainty sampling), Acc: 0.8
+Model: svm, 960 samples (uncertainty sampling), Acc: 0.7985185185185185
+[1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0 0 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0
+ 1 1 0 1 0 0 0 0 0 1 1 0 1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 1 0
+ 1 0 0 0 0 0 1 0 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0
+ 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 1
+ 1 1 0 1 0 0 1 1 0 0 0 0 0 1 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0
+ 0 0 1 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 1 0 0 1 1 1 0
+ 0 1 1 1 0 0 0 0 0 1 0 1 0 1 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0
+ 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0
+ 1 1 0 0 0 0 1 1 1 0 1 1 1 0 0 0 0 0 1 0 0 0 1 0 1 0 0 1 0 0 1 0 0 0 0 1 0
+ 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 1 0 0 0 1 0 0 0 1 0 0 1 0 1 0 0 1 0
+ 0 0 0 0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 1 0 0
+ 0 0 0 0 0 0 1 0 1 0 0 1 0 0 1 1 0 0 0 0 0 0 0 1 0 0 0 0 0 1 1 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0
+ 1 0 1 0 0 0 1 0 1 0 1 0 0 0 0 0 1 0 0 0 0 1 1 0 1 0 1 1 0 0 1 0 0 0 0 0 0
+ 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 0 0 0 0 0
+ 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 1 1 0 0 0 1
+ 0 0 0 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 1 0
+ 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 1 0 0 0 0 1 0 0 1 0 0 0 0 0 0 1 0 0 0 0 1 1
+ 0 0 0 0 0 0 0 0 0]
+initial data point indices: [ 288  836  260  708   45 1210  918  849 1307 1578]
+Beginning QBC
+Model: svm, 20 samples (QBC), Acc: 0.5451851851851852
+Model: svm, 30 samples (QBC), Acc: 0.6207407407407407
+Model: svm, 40 samples (QBC), Acc: 0.6962962962962963
+Model: svm, 50 samples (QBC), Acc: 0.7155555555555555
+Model: svm, 60 samples (QBC), Acc: 0.7229629629629629
+Model: svm, 70 samples (QBC), Acc: 0.7437037037037038
+Model: svm, 80 samples (QBC), Acc: 0.7422222222222222
+Model: svm, 90 samples (QBC), Acc: 0.7466666666666667
+Model: svm, 100 samples (QBC), Acc: 0.7525925925925926
+Model: svm, 110 samples (QBC), Acc: 0.7525925925925926
+Model: svm, 120 samples (QBC), Acc: 0.76
+Model: svm, 130 samples (QBC), Acc: 0.7614814814814815
+Model: svm, 140 samples (QBC), Acc: 0.7570370370370371
+Model: svm, 150 samples (QBC), Acc: 0.7555555555555555
+Model: svm, 160 samples (QBC), Acc: 0.7659259259259259
+Model: svm, 170 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 180 samples (QBC), Acc: 0.7644444444444445
+Model: svm, 190 samples (QBC), Acc: 0.7644444444444445
+Model: svm, 200 samples (QBC), Acc: 0.7703703703703704
+Model: svm, 210 samples (QBC), Acc: 0.76
+Model: svm, 220 samples (QBC), Acc: 0.7644444444444445
+Model: svm, 230 samples (QBC), Acc: 0.7614814814814815
+Model: svm, 240 samples (QBC), Acc: 0.762962962962963
+Model: svm, 250 samples (QBC), Acc: 0.7703703703703704
+Model: svm, 260 samples (QBC), Acc: 0.7688888888888888
+Model: svm, 270 samples (QBC), Acc: 0.762962962962963
+Model: svm, 280 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 290 samples (QBC), Acc: 0.762962962962963
+Model: svm, 300 samples (QBC), Acc: 0.762962962962963
+Model: svm, 310 samples (QBC), Acc: 0.7585185185185185
+Model: svm, 320 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 330 samples (QBC), Acc: 0.7614814814814815
+Model: svm, 340 samples (QBC), Acc: 0.7644444444444445
+Model: svm, 350 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 360 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 370 samples (QBC), Acc: 0.7748148148148148
+Model: svm, 380 samples (QBC), Acc: 0.7703703703703704
+Model: svm, 390 samples (QBC), Acc: 0.7659259259259259
+Model: svm, 400 samples (QBC), Acc: 0.7659259259259259
+Model: svm, 410 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 420 samples (QBC), Acc: 0.7644444444444445
+Model: svm, 430 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 440 samples (QBC), Acc: 0.7659259259259259
+Model: svm, 450 samples (QBC), Acc: 0.7674074074074074
+Model: svm, 460 samples (QBC), Acc: 0.7688888888888888
+Model: svm, 470 samples (QBC), Acc: 0.7688888888888888
+Model: svm, 480 samples (QBC), Acc: 0.7748148148148148
+Model: svm, 490 samples (QBC), Acc: 0.7748148148148148
+Model: svm, 500 samples (QBC), Acc: 0.7777777777777778
+Model: svm, 510 samples (QBC), Acc: 0.7762962962962963
+Model: svm, 520 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 530 samples (QBC), Acc: 0.7777777777777778
+Model: svm, 540 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 550 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 560 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 570 samples (QBC), Acc: 0.7762962962962963
+Model: svm, 580 samples (QBC), Acc: 0.7762962962962963
+Model: svm, 590 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 600 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 610 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 620 samples (QBC), Acc: 0.7822222222222223
+Model: svm, 630 samples (QBC), Acc: 0.7822222222222223
+Model: svm, 640 samples (QBC), Acc: 0.7837037037037037
+Model: svm, 650 samples (QBC), Acc: 0.7837037037037037
+Model: svm, 660 samples (QBC), Acc: 0.7851851851851852
+Model: svm, 670 samples (QBC), Acc: 0.7822222222222223
+Model: svm, 680 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 690 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 700 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 710 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 720 samples (QBC), Acc: 0.7822222222222223
+Model: svm, 730 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 740 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 750 samples (QBC), Acc: 0.7762962962962963
+Model: svm, 760 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 770 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 780 samples (QBC), Acc: 0.7777777777777778
+Model: svm, 790 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 800 samples (QBC), Acc: 0.7777777777777778
+Model: svm, 810 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 820 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 830 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 840 samples (QBC), Acc: 0.7807407407407407
+Model: svm, 850 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 860 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 870 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 880 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 890 samples (QBC), Acc: 0.7792592592592592
+Model: svm, 900 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 910 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 920 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 930 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 940 samples (QBC), Acc: 0.7733333333333333
+Model: svm, 950 samples (QBC), Acc: 0.7762962962962963
+Model: svm, 960 samples (QBC), Acc: 0.7762962962962963

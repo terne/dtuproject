@@ -87,15 +87,14 @@ print("length of poolidx", len(poolidx))
 
 num_iterations=95
 
-classifier = "svm"
+classifier = "LR"
 
 if classifier=="svm":
     clf = LinearSVC()
 elif classifier=="LR":
     clf = lin.LogisticRegression(penalty='l2',C=1.)
 else:
-    print("Specify classifier, please.")
-    break
+    print("Please specify classifier.")
 
 print("Beginning random sampling")
 testacc=[]

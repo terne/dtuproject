@@ -38,7 +38,7 @@ undersample = False
 classifier = "svm" # "svm" or "LR"
 num_iterations=95
 addn=10 #samples to add each time
-
+print({"representation":representation, "undersample":undersample, "classifier":classifier, "num_iterations":num_iterations, "addn":addn})
 
 if representation == "BERT":
     # use pretrained embeddings (transfer learning) – transformer-based (BERT).

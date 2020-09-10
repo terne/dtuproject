@@ -33,7 +33,12 @@ ytest = test.label.values
 print(len(ypool), len(ytest))
 print(Xpool[:10])
 
-representation = "BoW" # "BERT" or "BoW"
+representation = "BERT" # "BERT" or "BoW"
+undersample = False
+classifier = "svm" # "svm" or "LR"
+num_iterations=95
+addn=10 #samples to add each time
+
 
 if representation == "BERT":
     # use pretrained embeddings (transfer learning) – transformer-based (BERT).
@@ -68,10 +73,11 @@ elif representation == "BoW":
     Xtest = vectorizer.transform(Xtest)
 
 
-print("undersampling now..")
-rus = RandomUnderSampler(random_state=42)
-Xpool, ypool = rus.fit_sample(Xpool, ypool)
-print('Resampled dataset shape {}'.format(Counter(ypool)))
+if undersample == True:
+    print("undersampling now..")
+    rus = RandomUnderSampler(random_state=42)
+    Xpool, ypool = rus.fit_sample(Xpool, ypool)
+    print('Resampled dataset shape {}'.format(Counter(ypool)))
 if representation=="BERT":
     Xpool, Xtest = np.array(Xpool), np.array(Xtest)
 elif representation=="BoW":
@@ -81,7 +87,7 @@ print("length of Xpool", Xpool.shape[0])
 Xpool_class0idx = [indel for indel,i in enumerate(ypool) if i==0]
 Xpool_class1idx = [indel for indel,i in enumerate(ypool) if i==1]
 #print(Xpool_class1idx)
-addn=10 #samples to add each time
+
 #randomize order of pool to avoid sampling the same subject sequentially
 order=np.random.permutation(range(Xpool.shape[0]))
 order0 = np.random.permutation(Xpool_class0idx)
@@ -90,7 +96,7 @@ order1 = np.random.permutation(Xpool_class1idx)
 ninit = 5 #initial samples
 #initial training set
 #trainset=order[:ninit]
-trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class
+trainset=np.random.permutation(np.append(order0[:ninit],order1[:ninit])) # 5 from each class, 10 in total
 print("initial data point indices:",trainset)
 
 Xtrain=np.take(Xpool,trainset,axis=0)
@@ -100,9 +106,6 @@ poolidx=np.arange(Xpool.shape[0],dtype=np.int)
 poolidx=np.setdiff1d(poolidx,trainset)
 print("length of poolidx", len(poolidx))
 
-num_iterations=95
-
-classifier = "svm"
 
 if classifier=="svm":
     clf = LinearSVC()
@@ -226,4 +229,4 @@ plt.plot(*tuple(np.array(testacc_qbc).T));
 plt.legend(('random sampling','uncertainty sampling','QBC'));
 plt.xlabel("Number of training samples")
 plt.ylabel("Test accuracy")
-plt.savefig("BoW_"+classifier+"_learning_curves.png", dpi=100)
+plt.savefig(representation+"_"+classifier+"_undersample"+str(undersample)+"_addn"+str(addn)+"_learning_curves.png", dpi=100)

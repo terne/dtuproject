@@ -43,8 +43,8 @@ def transform(sentences):
         last_hidden_state = outputs[0] # "Sequence of hidden-states at the output of the last layer of the model."
         pooler_output = outputs[1] # "Last layer hidden-state of the first token of the sequence (classification token) further processed by a Linear layer and a Tanh activation function. The Linear layer weights are trained from the next sentence prediction (classification) objective during pretraining."
         # either output mean embedding vectors or the pooler output
-        #output.append(pooler_output[0].detach().numpy().tolist())
-        output.append(torch.mean(last_hidden_state[0],0).detach().numpy().tolist())
+        output.append(pooler_output[0].detach().numpy().tolist())
+        #output.append(torch.mean(last_hidden_state[0],0).detach().numpy().tolist())
     return output
 
 print("transforming Xpool...")
@@ -87,7 +87,7 @@ print("length of poolidx", len(poolidx))
 
 num_iterations=95
 
-classifier = "LR"
+classifier = "svm"
 
 if classifier=="svm":
     clf = LinearSVC()
@@ -110,7 +110,7 @@ for i in range(num_iterations):
     Xtrain = np.concatenate((Xtrain,Xpool[random_indices]))
     ytrain = np.concatenate((ytrain,ypool[random_indices]))
     poolidx=np.setdiff1d(poolidx,random_indices)
-    print('Model: Linear SVM, {} random samples, Acc: {}'.format(len(Xtrain),accuracy))
+    print('Model: {}, {} random samples, Acc: {}'.format(classifier,len(Xtrain),accuracy))
 
 # Uncertainty sampling following the FMRI exercise notebook
 #reset training set and pool but starting with the same 10 samples as before.
@@ -147,7 +147,7 @@ for i in range(num_iterations):
     ytrain=np.concatenate((ytrain,ypool[poolidx[ypool_p_sort_idx[-addn:]]]))
     #remove from pool
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (uncertainty sampling), Acc: {}'.format(len(Xtrain), accuracy))
+    print('Model: {}, {} samples (uncertainty sampling), Acc: {}'.format(classifier,len(Xtrain), accuracy))
 print(pred)
 
 # Query by commitee
@@ -191,7 +191,7 @@ for i in range(num_iterations):
     #remove from pool
     #print(len(ypool_p_sort_idx[-addn:]))
     poolidx=np.setdiff1d(poolidx,ypool_p_sort_idx[-addn:])
-    print('Model: Linear SVM, {} samples (QBC), Acc: {}'.format(len(Xtrain), accuracy))
+    print('Model: {}, {} samples (QBC), Acc: {}'.format(classifier,len(Xtrain), accuracy))
 
 #Plot learning curve
 plt.plot(*tuple(np.array(testacc).T));
@@ -202,4 +202,4 @@ plt.plot(*tuple(np.array(testacc_qbc).T));
 plt.legend(('random sampling','uncertainty sampling','QBC'));
 plt.xlabel("Number of training samples")
 plt.ylabel("Test accuracy")
-plt.savefig(classifier+"_learning_curves.png", dpi=100)
+plt.savefig("pooler_out_"+classifier+"_learning_curves.png", dpi=100)
